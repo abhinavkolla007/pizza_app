@@ -1,0 +1,35 @@
+.order-container {
+  max-width: 600px;
+  margin: auto;
+  padding: 2rem;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.option-group {
+  margin-bottom: 1rem;
+}
+
+.option-group label {
+  display: block;
+  margin-top: 0.5rem;
+}
+
+.summary {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.pay-btn {
+  padding: 10px 20px;
+  background: #f37254;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.pay-btn:hover {
+  background: #d35445;
+}
