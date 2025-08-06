@@ -1,10 +1,28 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
-const inventorySchema = new mongoose.Schema({
-  type: { type: String, required: true }, // e.g., base, sauce, cheese, veggie, meat
-  name: { type: String, required: true }, // e.g., "Thin Crust", "Tomato Sauce"
-  quantity: { type: Number, required: true, default: 0 },
-  threshold: { type: Number, required: true, default: 20 } // for low stock alerts
-});
+const InventorySchema = new mongoose.Schema({
+  type: { // e.g., "base", "sauce", "cheese", "veggie", "meat"
+    type: String,
+    required: true,
+    lowercase: true,
+  },
+  name: { // e.g., "Thin Crust", "Tomato Basil", "Mozzarella", "Onion", "Chicken"
+    type: String,
+    required: true,
+    unique: true, // Item names should be unique for easy lookup
+  },
+  stock: {
+    type: Number,
+    required: true,
+    default: 0,
+    min: 0,
+  },
+  threshold: { // Admin notification threshold
+    type: Number,
+    required: true,
+    default: 20,
+    min: 0,
+  },
+}, { timestamps: true });
 
-module.exports = mongoose.model("Inventory", inventorySchema);
+module.exports = mongoose.model('Inventory', InventorySchema);

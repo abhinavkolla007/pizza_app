@@ -24,7 +24,7 @@ exports.registerUser = async (req, res) => {
 
     await user.save();
 
-    const verifyURL = `http://localhost:3000/verify-email?token=${emailToken}`;
+    const verifyURL = `${emailToken}`;
 
     const transporter = nodemailer.createTransport({
       service: "gmail",

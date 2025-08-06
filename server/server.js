@@ -1,37 +1,45 @@
-const express = require("express");
-const dotenv = require("dotenv");
-const connectDB = require("./config/db");
-const cors = require("cors");
+require('dotenv').config(); // Load environment variables from .env
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+const path = require('path'); // For serving static files in production
 
-const authRoutes = require("./routes/auth");
-const adminRoutes = require("./routes/admin");
-const paymentRoutes = require("./routes/payment");
-const pizzaRoutes = require("./routes/pizza");
-const orderRoutes = require("./routes/order");
-const pizzaRouter = require('./routes/pizza');
-const inventoryRouter = require('./routes/inventory');
-
-dotenv.config();
-connectDB();
+const authRoutes = require('./routes/auth');
+const inventoryRoutes = require('./routes/inventory');
+const pizzaRoutes = require('./routes/pizza');
+const paymentRoutes = require('./routes/payment');
 
 const app = express();
-app.use(express.json());
-app.use(cors());
 
-// ✅ All routes
-app.use("/api/auth", authRoutes);
-app.use("/api/admin", adminRoutes);
-app.use("/api/payment", paymentRoutes);
-app.use("/api/pizza", pizzaRoutes);
-app.use("/api/order", orderRoutes); // ✅ Correct path
-app.use('/api/pizza', pizzaRouter);
-app.use('/api/inventory', inventoryRouter);
+// Middleware
+app.use(cors()); // Enable CORS for all origins (adjust in production)
+app.use(express.json()); // Body parser for JSON requests
 
-app.get("/", (req, res) => {
-  res.send("✅ API is running...");
+// Connect to MongoDB
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log('MongoDB connected successfully!'))
+  .catch(err => console.error('MongoDB connection error:', err));
+
+// API Routes
+app.use('/api/auth', authRoutes);
+app.use('/api/admin', inventoryRoutes); // Admin routes for inventory (includes admin orders)
+app.use('/api/pizza', pizzaRoutes); // User pizza orders and options
+app.use('/api/payment', paymentRoutes); // Payment gateway
+
+// Serve static files in production (if frontend is served from backend)
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../client/build')));
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../client', 'build', 'index.html'));
+  });
+}
+
+// Basic error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
 });
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`✅ Server running on port ${PORT}`);
-});
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
