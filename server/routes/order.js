@@ -5,7 +5,6 @@ const Pizza = require("../models/pizza");
 const Inventory = require("../models/inventory");
 const nodemailer = require("nodemailer");
 
-// GET /my-orders - fetch user's orders
 router.get("/my-orders", protect, async (req, res) => {
   try {
     const orders = await Pizza.find({ userId: req.user._id }).sort({ createdAt: -1 });
@@ -15,7 +14,6 @@ router.get("/my-orders", protect, async (req, res) => {
   }
 });
 
-// POST /place - place order and update stock
 router.post("/place", protect, async (req, res) => {
   const { base, sauce, cheese, veggies = [], meat = [] } = req.body;
 
@@ -31,14 +29,13 @@ router.post("/place", protect, async (req, res) => {
     });
     await order.save();
 
-    // Function to deduct stock and send email alert if low
     const deductStock = async (type, name) => {
       const item = await Inventory.findOne({ type, name });
       if (item) {
-        item.quantity -= 1; // changed from item.stock
+        item.quantity -= 1;
         await item.save();
 
-        if (item.quantity < item.threshold) { // changed from item.stock
+        if (item.quantity < item.threshold) {
           const transporter = nodemailer.createTransport({
             service: "gmail",
             auth: {

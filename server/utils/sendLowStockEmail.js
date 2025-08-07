@@ -6,8 +6,8 @@ const sendStockAlert = async (lowStockItems) => {
   const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-      user: process.env.ADMIN_EMAIL,         // e.g., abhinavkolla007@gmail.com
-      pass: process.env.ADMIN_EMAIL_PASSWORD // App password (NOT regular Gmail password)
+      user: process.env.ADMIN_EMAIL,
+      pass: process.env.ADMIN_EMAIL_PASSWORD
     },
   });
 
@@ -17,7 +17,7 @@ const sendStockAlert = async (lowStockItems) => {
 
   const mailOptions = {
     from: process.env.ADMIN_EMAIL,
-    to: process.env.ADMIN_EMAIL, // send to self or multiple admins
+    to: process.env.ADMIN_EMAIL,
     subject: "⚠️ Low Stock Alert - Pizza Inventory",
     text: `The following inventory items are below threshold:\n\n${itemList}\n\nPlease restock soon.`,
   };

@@ -15,8 +15,6 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-// -------------------- INVENTORY ROUTES --------------------
-
 router.get("/inventory", protect, isAdmin, async (req, res) => {
   try {
     const items = await Inventory.find().sort({ createdAt: -1 });
@@ -64,8 +62,6 @@ router.delete("/inventory/:id", protect, isAdmin, async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
-
-// -------------------- ORDER ROUTES --------------------
 
 router.get("/orders", protect, isAdmin, async (req, res) => {
   try {

@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const OrderSchema = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User', // Reference to the User model
+    ref: 'User',
     required: true,
   },
   base: {
@@ -19,11 +19,11 @@ const OrderSchema = new mongoose.Schema({
     required: true,
   },
   veggies: {
-    type: [String], // Array of strings
+    type: [String],
     default: [],
   },
   meat: {
-    type: [String], // Array of strings
+    type: [String],
     default: [],
   },
   status: {
@@ -31,21 +31,21 @@ const OrderSchema = new mongoose.Schema({
     enum: ['Order Received', 'In Kitchen', 'Out for Delivery', 'Delivered'],
     default: 'Order Received',
   },
-  paymentId: { // Razorpay payment ID
+  paymentId: { 
     type: String,
     required: true,
   },
-  orderId: { // Razorpay order ID
+  orderId: { 
     type: String,
     required: true,
   },
-  signature: { // Razorpay signature
+  signature: { 
     type: String,
     required: true,
   },
-  amount: { // Store the amount for reference
+  amount: {
     type: Number,
-    default: 299, // Assuming fixed price for now
+    default: 299,
   }
 }, { timestamps: true });
 

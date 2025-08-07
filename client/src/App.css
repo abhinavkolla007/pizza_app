@@ -11,7 +11,7 @@ body {
 
 .App-logo {
   height: 40vmin;
-  width: 40vmin; /* ✅ Explicit width to avoid "auto" */
+  width: 40vmin;
   pointer-events: none;
 }
 

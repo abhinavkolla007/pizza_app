@@ -7,7 +7,6 @@ import DashboardPage from './pages/DashboardPage';
 import AdminDashboardPage from './pages/AdminDashboardPage';
 import API from './services/api';
 
-// PrivateRoute component to protect routes
 const PrivateRoute = ({ children, allowedRoles }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(null);
   const [userRole, setUserRole] = useState(null);

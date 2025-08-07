@@ -1,4 +1,3 @@
-// pizza-app/client/src/pages/EmailVerificationPage.jsx
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import API from '../services/api';

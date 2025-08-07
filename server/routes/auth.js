@@ -42,9 +42,6 @@ router.post('/register', async (req, res) => {
   }
 });
 
-// @route   GET /api/auth/verify-email
-// @desc    Verify user email (Final corrected version)
-// @access  Public
 router.get('/verify-email', async (req, res) => {
   const { token } = req.query;
   console.log(`[Verification] Attempting to verify user with token: ${token}`);

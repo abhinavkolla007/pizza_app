@@ -21,5 +21,4 @@ const pizzaSchema = new mongoose.Schema({
   },
 });
 
-// ✅ Avoid OverwriteModelError in dev or reload
 module.exports = mongoose.models.Pizza || mongoose.model("Pizza", pizzaSchema);
