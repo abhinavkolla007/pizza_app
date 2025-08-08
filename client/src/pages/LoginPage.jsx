@@ -26,26 +26,47 @@ export default function LoginPage() {
   };
 
   return (
+    // Outer container for the full screen background image and overlay
     <div style={{
       minHeight: "100vh",
       width: "100vw",
-      background: "linear-gradient(135deg, #FFC7B2 0%, #E0BBE4 100%)", // Warm Peach to Soft Lavender
+      // --- BACKGROUND IMAGE STYLES ---
+      backgroundImage: `url('https://media.istockphoto.com/id/1303021179/photo/different-tipes-of-pizza.jpg?s=612x612&w=0&k=20&c=G7wfRN4fb7LSpZ766geBNdhxy2IuwfRYbrNj9c63_ZQ=')`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat',
+      // --- END BACKGROUND IMAGE STYLES ---
+      position: "relative",
+      overflow: "hidden",
+      display: "flex", // Use flex to center content within the image container
+      alignItems: "center",
+      justifyContent: "center",
       margin: 0,
       padding: 0,
-      boxSizing: "border-box",
-      position: "relative",
-      overflow: "hidden"
+      boxSizing: "border-box"
     }}>
+      {/* Subtle overlay for better text readability on top of the image */}
+      <div style={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        backgroundColor: 'rgba(0, 0, 0, 0.4)', // Dark overlay (adjust opacity as needed)
+        zIndex: 1, // Ensure overlay is behind the form but above the image
+      }}></div>
+
       <style>
         {`
           @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
-          
+
           html, body {
             margin: 0;
             padding: 0;
             height: 100%;
-            font-size: 16px; 
+            font-size: 16px;
           }
+
           body {
             font-family: 'Poppins', sans-serif;
             overflow: hidden;
@@ -56,72 +77,71 @@ export default function LoginPage() {
             to { opacity: 1; }
           }
 
-          /* --- CRITICAL: Unified Input/Select Styling for Consistency --- */
-          /* Apply these styles to all relevant inputs and selects globally */
           input[type="email"],
           input[type="password"],
           input[type="text"],
           input[type="number"],
-          select { 
-            font-size: 16px !important; 
-            -webkit-text-size-adjust: 100% !important; 
-            line-height: normal !important; 
-            box-sizing: border-box !important; 
-            outline: none !important; 
+          select {
+            font-size: 16px !important;
+            -webkit-text-size-adjust: 100% !important;
+            line-height: normal !important;
+            box-sizing: border-box !important;
+            outline: none !important;
 
-            padding: 0.75rem 1rem; 
+            padding: 0.75rem 1rem;
             border: 1px solid #ddd;
             border-radius: 8px;
             background: #f0f4ff;
-            font-family: 'Poppins', sans-serif; 
-            width: 100%; 
-            -webkit-appearance: none; 
-            -moz-appearance: none; 
-            appearance: none; 
+            font-family: 'Poppins', sans-serif;
+            width: 100%;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
           }
-          
+
           .select-wrapper::after {
             content: '▼';
-            font-size: 0.7rem; 
+            font-size: 0.7rem;
             color: #aaa;
             position: absolute;
             right: 1rem;
-            top: calc(50% + 3px); 
-            transform: translateY(-50%); 
-            pointer-events: none; 
+            top: calc(50% + 3px);
+            transform: translateY(-50%);
+            pointer-events: none;
           }
         `}
       </style>
-      
+
+      {/* The centered login form container (z-index ensures it's above the overlay) */}
       <div style={{
         background: "#fff",
         padding: "2.5rem 2rem",
         borderRadius: "16px",
-        boxShadow: "0 8px 32px rgba(0,0,0,0.15)",
+        boxShadow: "0 8px 32px rgba(0,0,0,0.3)", // Increased shadow for better contrast
         width: "350px",
         textAlign: "center",
         animation: "fadeIn 1s forwards",
-        position: "absolute",
-        top: "50%",
-        left: "50%",
-        transform: "translate(-50%, -50%)",
+        position: "relative", // Changed to relative, centered by parent flex
+        zIndex: 2, // Ensure form is above the overlay
         maxWidth: "90%",
         maxHeight: "95vh",
         overflowY: "auto"
       }}>
         <h2 style={{ color: "#2575fc", marginBottom: "1.5rem", fontFamily: "'Poppins', sans-serif" }}>Login</h2>
-        <form onSubmit={handleLogin}>
+        <form onSubmit={handleLogin} autoComplete="on">
           {/* Email Input */}
           <div style={{ position: "relative", marginBottom: "1.2rem" }}>
             <input
+              name="email"
+              autoComplete="username"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Email"
               required
               type="email"
               style={{
-                width: "100%", 
-                padding: "0.75rem 2.5rem 0.75rem 1rem", 
+                width: "100%",
+                padding: "0.75rem 2.5rem 0.75rem 1rem",
                 border: "1px solid #ddd",
                 borderRadius: "8px",
                 background: "#f0f4ff",
@@ -145,14 +165,16 @@ export default function LoginPage() {
           {/* Password Input */}
           <div style={{ position: "relative", marginBottom: "1.2rem" }}>
             <input
+              name="password"
+              autoComplete="current-password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               type="password"
               placeholder="Password"
               required
               style={{
-                width: "100%", 
-                padding: "0.75rem 2.5rem 0.75rem 1rem", 
+                width: "100%",
+                padding: "0.75rem 2.5rem 0.75rem 1rem",
                 border: "1px solid #ddd",
                 borderRadius: "8px",
                 background: "#f0f4ff",
@@ -172,6 +194,7 @@ export default function LoginPage() {
               &#128274;
             </span>
           </div>
+
           <button
             type="submit"
             style={{
@@ -196,6 +219,7 @@ export default function LoginPage() {
             Sign In
           </button>
         </form>
+
         <Link to="/forgot-password" style={{
           display: "block",
           marginTop: "1rem",
@@ -210,6 +234,7 @@ export default function LoginPage() {
         >
           Forgot Password?
         </Link>
+
         <Link to="/register" style={{
           display: "block",
           marginTop: "0.5rem",
