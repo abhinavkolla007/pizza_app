@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const Order = require('../models/Order');
-const Inventory = require('../models/Inventory');
+const Order = require('../models/order');
+const Inventory = require('../models/inventory');
 const { protect, authorizeRoles } = require('../middleware/authMiddleware');
 const { sendLowStockNotification } = require('../utils/emailService');
 
