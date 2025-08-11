@@ -4,9 +4,7 @@
     {
       "src": "client/package.json",
       "use": "@vercel/static-build",
-      "config": {
-        "outputDirectory": "build"
-      }
+      "config": { "outputDirectory": "build" }
     },
     {
       "src": "server/server.js",
@@ -24,5 +22,5 @@
     }
   ],
   "installCommand": "npm install --prefix client && npm install --prefix server",
-  "buildCommand": "cd client && npx react-scripts build"
+  "buildCommand": "cd client && npm run build"
 }
